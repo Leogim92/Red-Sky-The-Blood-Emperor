@@ -53,6 +53,11 @@ public class PlayerController : MonoBehaviour
         return animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1;
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("Colidi com " + other.name);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Colidi com " + other.name);
