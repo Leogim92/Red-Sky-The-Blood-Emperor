@@ -20,6 +20,7 @@ public class PatrollingState : IState
         rb = ai.gameObject.GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.zero;
         player = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     public void Tick()
@@ -29,7 +30,8 @@ public class PatrollingState : IState
             ai.FSM.ChangeState(new AttackingState(ai, "Enemy_attack"));
         }
         else
-        {
+        {// Esse código tem de ser feito de x em x períodos de tempo.
+
             Vector2 lookAt = (ai.initialPosition + Random.insideUnitCircle * areaToPatrol) - new Vector2(rb.transform.position.x, rb.transform.position.y); //Randomizando para onde ele vai olhar
             rb.transform.right = lookAt.normalized;
 

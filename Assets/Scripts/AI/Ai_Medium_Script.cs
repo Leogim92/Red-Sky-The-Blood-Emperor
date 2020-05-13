@@ -9,20 +9,18 @@ public class Ai_Medium_Script : MonoBehaviour
     internal StateMachine FSM = new StateMachine();
     internal Vector2 initialPosition;
     internal ParticleSystem.EmissionModule emission;
-    public ParticleSystem particle;
     void Start()
     {
-        
-        initialPosition = this.transform.position;
-        GetComponent<ParticleSystem>().Play();
-        emission = particle.emission;
+        emission = GetComponentInChildren<ParticleSystem>().emission;
+        GetComponentInChildren<ParticleSystem>().Play();
         emission.enabled = false;
+
+        initialPosition = this.transform.position;
 
         this.FSM.ChangeState(new PatrollingState(this, "enemy_walk"));
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         FSM.Tick();
