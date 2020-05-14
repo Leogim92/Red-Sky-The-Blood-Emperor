@@ -5130,7 +5130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f377968085a1a40bcc2c7255ab7a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particle: {fileID: 76993437}
+  movementSpeed: 5
 --- !u!58 &328458001
 CircleCollider2D:
   m_ObjectHideFlags: 0

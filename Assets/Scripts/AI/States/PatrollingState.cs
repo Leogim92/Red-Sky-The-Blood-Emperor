@@ -1,14 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PatrollingState : IState
 {
+    private Vector2 patrolRouteStartPos;
+    private bool changeDirection=true;
     private Ai_Medium_Script ai;
     private string animationName;
-    private Rigidbody2D rb;
     private GameObject player;
-    public float areaToPatrol = 20f;
+    private float areaToPatrol = 20f;
 
     public PatrollingState(Ai_Medium_Script ai, string animationName)
     {
@@ -17,31 +19,53 @@ public class PatrollingState : IState
     }
     public void Enter()
     {
-        rb = ai.gameObject.GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.zero;
         player = GameObject.FindGameObjectWithTag("Player");
-
     }
 
     public void Tick()
     {
-        if(Vector2.Distance(player.transform.position,rb.transform.position) < 10f)
+        if(Vector2.Distance(player.transform.position,ai.transform.position) < 10f)
         {
             ai.FSM.ChangeState(new AttackingState(ai, "Enemy_attack"));
         }
         else
-        {// Esse código tem de ser feito de x em x períodos de tempo.
+        {
+            MoveAI();
+            if (changeDirection)
+            {
+                GetNewDirection();
+            }
+            else
+            {
+                CheckForDistancePatrolled();
+            }
 
-            Vector2 lookAt = (ai.initialPosition + Random.insideUnitCircle * areaToPatrol) - new Vector2(rb.transform.position.x, rb.transform.position.y); //Randomizando para onde ele vai olhar
-            rb.transform.right = lookAt.normalized;
-
-            rb.AddForce(rb.transform.right * 100);
         }
 
     }
 
+    private void MoveAI()
+    {
+        ai.transform.position += ai.transform.right * ai.movementSpeed * Time.deltaTime;
+    }
+
+    private void GetNewDirection()
+    {
+        patrolRouteStartPos = ai.transform.position;
+        Vector2 lookAt = (ai.initialPosition + UnityEngine.Random.insideUnitCircle * areaToPatrol) - new Vector2(ai.transform.position.x, ai.transform.position.y);
+        ai.transform.right = lookAt.normalized;
+        changeDirection = false;
+    }
+    private void CheckForDistancePatrolled()
+    {
+        if(Vector2.Distance(patrolRouteStartPos,ai.transform.position) > ai.distanceToPatrol)
+        {
+            changeDirection = true;
+        }
+    }
+
     public void Exit()
     {
-        rb.velocity = Vector2.zero;
+        
     }
 }
