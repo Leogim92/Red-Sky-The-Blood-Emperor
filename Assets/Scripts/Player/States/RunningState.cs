@@ -14,7 +14,7 @@ public class RunningState : IState {
     }
     public void Enter () {
         player.CurrentStateText.text = "Running";
-        player.animator.Play (animationName);
+        //player.animator.Play (animationName);
     }
 
     public void Tick () {

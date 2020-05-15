@@ -9,6 +9,9 @@ public class Ai_Medium_Script : MonoBehaviour
     internal StateMachine FSM = new StateMachine();
     internal Vector2 initialPosition;
     internal ParticleSystem.EmissionModule emission;
+
+    public float movementSpeed = 5f;
+    public float distanceToPatrol = 5f;
     void Start()
     {
         emission = GetComponentInChildren<ParticleSystem>().emission;
