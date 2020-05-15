@@ -31,7 +31,7 @@ public class PatrollingState : IState
         else
         {
             MoveAI();
-            if (changeDirection)
+            if (changeDirection==true)
             {
                 GetNewDirection();
             }
@@ -43,12 +43,10 @@ public class PatrollingState : IState
         }
 
     }
-
     private void MoveAI()
     {
         ai.transform.position += ai.transform.right * ai.movementSpeed * Time.deltaTime;
     }
-
     private void GetNewDirection()
     {
         patrolRouteStartPos = ai.transform.position;
