@@ -219,7 +219,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -5132,6 +5132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 2
   distanceToPatrol: 5
+  aiBehaviour: 0
 --- !u!58 &328458001
 CircleCollider2D:
   m_ObjectHideFlags: 0

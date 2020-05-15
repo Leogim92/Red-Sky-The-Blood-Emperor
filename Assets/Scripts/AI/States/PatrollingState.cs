@@ -11,7 +11,7 @@ public class PatrollingState : IState
     private string animationName;
     private GameObject player;
     private float areaToPatrol = 20f;
-
+    
     public PatrollingState(Ai_Medium_Script ai, string animationName)
     {
         this.ai = ai;
@@ -50,7 +50,7 @@ public class PatrollingState : IState
     private void GetNewDirection()
     {
         patrolRouteStartPos = ai.transform.position;
-        Vector2 lookAt = (ai.initialPosition + UnityEngine.Random.insideUnitCircle * areaToPatrol) - new Vector2(ai.transform.position.x, ai.transform.position.y);
+        Vector2 lookAt = (UnityEngine.Random.insideUnitCircle * areaToPatrol) - new Vector2(ai.transform.position.x, ai.transform.position.y);
         ai.transform.right = lookAt.normalized;
         changeDirection = false;
     }
