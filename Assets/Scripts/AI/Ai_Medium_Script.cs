@@ -23,7 +23,6 @@ public class Ai_Medium_Script : MonoBehaviour
         emission.enabled = false;
 
         AIInitialBehaviour();
-        initialPosition = this.transform.position;
     }
     void Update()
     {
