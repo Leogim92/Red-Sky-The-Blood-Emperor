@@ -105,14 +105,14 @@ public class DirectionalPatrolState : IState
         ai.transform.position += ai.transform.right * ai.movementSpeed * Time.deltaTime;
 
     }
-    private void LookAtPosition(Vector2 goTo)
+    private void LookAtPosition(Vector2 goTo) //Aqui ele deve olhar sempre para o ponto de patrulha
     {
         Vector2 lookAt = (goTo - new Vector2(ai.transform.position.x, ai.transform.position.y));
         ai.transform.right = lookAt.normalized;
     }
     private bool CheckForDistancePatrolled(Vector2 goTo)
     {
-        if (Vector2.Distance(new Vector2(ai.transform.position.x, ai.transform.position.y), goTo) < 0.6f)
+        if (Vector2.Distance(new Vector2(ai.transform.position.x, ai.transform.position.y), goTo) < 0.6f) //Se estiver próximo ao ponto, retorna true para que vá ao próximo ponto de patrulha
         {
             return true;
         }
