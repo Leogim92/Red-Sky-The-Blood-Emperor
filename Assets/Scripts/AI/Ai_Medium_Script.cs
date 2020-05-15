@@ -7,7 +7,6 @@ using UnityEngine;
 public class Ai_Medium_Script : MonoBehaviour
 {
     internal StateMachine FSM = new StateMachine();
-    internal Vector2 initialPosition;
     internal ParticleSystem.EmissionModule emission;
     public List<GameObject> positionsToBe = new List<GameObject>(); //Por que gameobjects? Porque todos eles tem transform
     public bool shouldReturnToFirstPosition = false; //Booleano para dizer se o personagem deve retornar ao começo.
@@ -16,22 +15,37 @@ public class Ai_Medium_Script : MonoBehaviour
 
     public float movementSpeed = 5f;
     public float distanceToPatrol = 5f;
+    public enum Behaviour { patrol, directional, vigilance, agressive};
+    public Behaviour aiBehaviour;
     void Start()
     {
         emission = GetComponentInChildren<ParticleSystem>().emission;
-        GetComponentInChildren<ParticleSystem>().Play();
         emission.enabled = false;
 
+        AIInitialBehaviour();
         initialPosition = this.transform.position;
-
-        //this.FSM.ChangeState(new PatrollingState(this, "enemy_walk"));
-        this.FSM.ChangeState(new DirectionalPatrolState(this, "enemy_walk"));
-
     }
-
     void Update()
     {
         FSM.Tick();
     }
-
+    private void AIInitialBehaviour()
+    {
+        switch (aiBehaviour)
+        {
+            case Behaviour.patrol:
+                this.FSM.ChangeState(new PatrollingState(this, "enemy_walk"));
+                break;
+            case Behaviour.directionalPatrol:
+                this.FSM.ChangeState(new DirectionalPatrolState(this, "enemy_walk"));
+                break;
+            case Behaviour.vigilance:
+                //this.FSM.ChangeState(new VigilanceState(this, "enemy_vigilance"));
+                break;
+            case Behaviour.agressive:
+                //this.FSM.ChangeState(new AgressiveState(this, "enemy_agressive"));
+                break;
+        }
+        
+    }
 }
