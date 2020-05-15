@@ -47,47 +47,58 @@ public class DirectionalPatrolState : IState
     public void Tick()
     {
 
-        if (Vector2.Distance(player.transform.position, ai.transform.position) < 10f)
+        if (Vector2.Distance(player.transform.position, ai.transform.position) < 10f) //Se estiver próximo ao player não fazer esta patrulha.
         {
             //ai.FSM.ChangeState(new AttackingState(ai, "Enemy_attack"));
             Debug.Log("I am back to previous state ");
             ai.FSM.SwitchToPreviousState();
         }
+
         else //Ok isso é hardcore, faz uma força
         {
-            MoveToPosition();
-            if (CheckForDistancePatrolled(positions[lastIteration])) //Se ele chega no ponto *
+            MoveToPosition(); //Primeiro, movemos.
+
+            if (CheckForDistancePatrolled(positions[lastIteration])) // Se alcança a posição
             {
-                if (retorno)//**
+                if (retorno == false) // Não está retornando , ou seja, está no caminho de ida.
                 {
-                    lastIteration--;
-                    LookAtPosition(positions[lastIteration]);
-
-                    if (lastIteration <= 0)
+                    if (ai.shouldReturnToFirstPosition)// Confere se é para retornar, se for, nós vamos ao próximo ponto da lista antes de conferir se é o ultimo
                     {
-                        retorno = false;
-                        lastIteration = 0;
-                    }
-                }
-                else
-                {
-                    lastIteration++; //* Adiciona um, para andar para o próximo ponto
-                    LookAtPosition(positions[lastIteration]);
+                        lastIteration++;
+                        LookAtPosition(positions[lastIteration]);//Olha para a posição nova
 
-                    if (lastIteration >= (positions.Count - 1)) // Se esse próximo ponto for o valor máximo
-                    {
-                        if (ai.shouldReturnToFirstPosition) //Confere se o bool de retornar é true, para que ele retorne ao ponto inicial
-                        {//Utilizando o **
-                            retorno = true;
-                            lastIteration = (positions.Count - 1);// Isso serve para evitar valores maiores do que existe no vetor
+                        if (lastIteration >= (positions.Count - 1)) //Se o ponto for o ultimo
+                        {
+                            retorno = true; //Retorne, então ele começa andar no sentido negativo da lista.
+                            lastIteration = (positions.Count - 1); //Evitar bugs
                         }
-                        else
+
+                    }
+                    else // Se não é para retornar
+                    {
+                        if (lastIteration >= (positions.Count - 1)) //Confere antes de aumentar se esse é o ultimo ponto da lista
                         {
                             Debug.Log("I am back to previous state ");
-                            ai.FSM.SwitchToPreviousState(); //Colocar idle aqui.
+                            ai.FSM.SwitchToPreviousState(); //Se for, retornar ao idle
                         }
 
+                        lastIteration++; //Se não for, continuar.
+                        LookAtPosition(positions[lastIteration]); //Olha para a posição nova
                     }
+
+                }
+                else //Se ele está retornando
+                {
+                    lastIteration--;  //Sempre que usamos o retorno temos de andar para o ponto anterior/próximo da lista antes de conferir
+                    LookAtPosition(positions[lastIteration]);
+
+                    if (lastIteration <= 0) //Conferimos se é a ultima posição, se for trocar o retorno para false e continuar interando, agora no sentido positivo.
+                    {
+                        retorno = false;
+                        lastIteration = 0;//Evitar bugs
+                    }
+
+
                 }
 
 
