@@ -15,7 +15,7 @@ public class Ai_Medium_Script : MonoBehaviour
 
     public float movementSpeed = 5f;
     public float distanceToPatrol = 5f;
-    public enum Behaviour { patrol, directional, vigilance, agressive};
+    public enum Behaviour { patrol, directionalPatrol, vigilance, agressive};
     public Behaviour aiBehaviour;
     void Start()
     {
@@ -23,7 +23,6 @@ public class Ai_Medium_Script : MonoBehaviour
         emission.enabled = false;
 
         AIInitialBehaviour();
-        initialPosition = this.transform.position;
     }
     void Update()
     {
