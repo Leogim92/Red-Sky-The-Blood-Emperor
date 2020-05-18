@@ -10,7 +10,7 @@ public class DirectionalPatrolState : IState
     private List<Vector2> positions = new List<Vector2>();
     private int lastIteration = 0;
     private bool retorno = false;
-
+    bool arePositionsAdded = false;
     public DirectionalPatrolState(Ai_Medium_Script ai, string animationName)
     {
         this.ai = ai;
@@ -26,16 +26,18 @@ public class DirectionalPatrolState : IState
             Debug.LogError("DirectionalPatrolState: You need to set the positions to be on the public gameobject list");
         }
 
-        //Aqui estamos trocando de Gameobject para Vector2
-        foreach (GameObject p in ai.positionsToBe)
+        if (!arePositionsAdded)
         {
-            positions.Add(p.transform.position);
+            foreach (Transform p in ai.positionsToBe)
+            {
+                positions.Add(p.position);
+            }
+            arePositionsAdded = true;
         }
-        
         //Para que isso? Para verificar se ele está mais próximo de algum ponto, talvez o patrol tenha reiniciado
         for (int i = 0; i < positions.Count; i++)
         {
-            if(Vector2.Distance(new Vector2(ai.transform.position.x, ai.transform.position.y), positions[i]) < 0.6f)
+            if (Vector2.Distance(new Vector2(ai.transform.position.x, ai.transform.position.y), positions[i]) < 0.6f)
             {
                 lastIteration = i;
             }
@@ -43,15 +45,13 @@ public class DirectionalPatrolState : IState
 
         LookAtPosition(positions[lastIteration]); //Começar olhando para a posição certa
     }
-        
+
     public void Tick()
     {
 
         if (Vector2.Distance(player.transform.position, ai.transform.position) < 10f) //Se estiver próximo ao player não fazer esta patrulha.
         {
-            //ai.FSM.ChangeState(new AttackingState(ai, "Enemy_attack"));
-            Debug.Log("I am back to previous state ");
-            ai.FSM.SwitchToPreviousState();
+            ai.FSM.ChangeState(new AttackingState(ai, "Enemy_attack"));
         }
 
         else //Ok isso é hardcore, faz uma força
@@ -78,8 +78,8 @@ public class DirectionalPatrolState : IState
                     {
                         if (lastIteration >= (positions.Count - 1)) //Confere antes de aumentar se esse é o ultimo ponto da lista
                         {
-                            Debug.Log("I am back to previous state ");
-                            ai.FSM.SwitchToPreviousState(); //Se for, retornar ao idle
+                            Debug.Log("Should stop here / Awaiting idle state implementation");
+                            return;
                         }
 
                         lastIteration++; //Se não for, continuar.

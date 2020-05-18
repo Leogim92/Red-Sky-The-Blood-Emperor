@@ -8,14 +8,14 @@ public class Ai_Medium_Script : MonoBehaviour
 {
     internal StateMachine FSM = new StateMachine();
     internal ParticleSystem.EmissionModule emission;
-    public List<GameObject> positionsToBe = new List<GameObject>(); //Por que gameobjects? Porque todos eles tem transform
+    public List<Transform> positionsToBe; //Por que gameobjects? Porque todos eles tem transform
     public bool shouldReturnToFirstPosition = false; //Booleano para dizer se o personagem deve retornar ao começo.
     //Interessante seria colocar outro bool para definir se o personagem retorna ao começo depois de passar pelo ultimo
     //objeto da lista ou se retorna pelos objetos da lista.
 
     public float movementSpeed = 5f;
     public float distanceToPatrol = 5f;
-    public enum Behaviour { patrol, directionalPatrol, vigilance, agressive};
+    public enum Behaviour { patrol, directionalPatrol, alternativeDPatrol, vigilance, agressive};
     public Behaviour aiBehaviour;
     void Start()
     {
@@ -37,6 +37,9 @@ public class Ai_Medium_Script : MonoBehaviour
                 break;
             case Behaviour.directionalPatrol:
                 this.FSM.ChangeState(new DirectionalPatrolState(this, "enemy_walk"));
+                break;
+            case Behaviour.alternativeDPatrol:
+                this.FSM.ChangeState(new AlternativeDirectionalPatrolState(this, "enemy_walk"));
                 break;
             case Behaviour.vigilance:
                 //this.FSM.ChangeState(new VigilanceState(this, "enemy_vigilance"));
