@@ -5131,13 +5131,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionsToBe:
-  - {fileID: 1105760896}
-  - {fileID: 1478806960}
-  - {fileID: 436480647}
+  - {fileID: 1105760897}
+  - {fileID: 1478806961}
+  - {fileID: 436480648}
   shouldReturnToFirstPosition: 1
-  movementSpeed: 2
+  movementSpeed: 10
   distanceToPatrol: 5
-  aiBehaviour: 0
+  aiBehaviour: 1
 --- !u!58 &328458001
 CircleCollider2D:
   m_ObjectHideFlags: 0
