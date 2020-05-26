@@ -14,7 +14,8 @@ public class RunningState : IState {
     }
     public void Enter () {
         player.CurrentStateText.text = "Running";
-        //player.animator.Play (animationName);
+        //player.anim.Play(animationName);
+        player.anim.SetBool("Run", true);
     }
 
     public void Tick () {
@@ -23,6 +24,7 @@ public class RunningState : IState {
             player.FSM.ChangeState (new IdleState (player, "player_idle"));
         }
 
+        //Old
         //player.rb.velocity = new Vector2 (player.xInput * player.Speed, player.yInput * player.Speed);
 
         //Movimento TANK
@@ -44,10 +46,12 @@ public class RunningState : IState {
         player.rb.velocity = Vector3.up * player.Speed * player.yInput + Vector3.right * player.Speed * player.xInput;
 
         //Aqui podemos adicionar o controle da animação
+        player.anim.SetFloat("xInput", player.xInput);
+        player.anim.SetFloat("yInput", player.yInput);
     }
 
     public void Exit()
     {
-
+        player.anim.SetBool("Run", false);
     }
 }

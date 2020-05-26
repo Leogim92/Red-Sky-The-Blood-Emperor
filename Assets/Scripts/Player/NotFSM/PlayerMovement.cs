@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//Função de exemplo para movimentação, aqui temos input de mouse também.
+
 //ATENÇÃO! SE QUISER USAR O RAYCAST O OBJETO GROUND TEM DE TER UM COLLIDER DIFERENTE DE MESH. TAMBÉM NÃO DEVE SER UM COLLIDER 2D.
 
 //Long Script Ahead

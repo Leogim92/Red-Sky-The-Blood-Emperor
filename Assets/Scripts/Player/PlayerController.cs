@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     public string Name;
     public float Speed = 3f; //Usado para definir a velocidade do player
-    [SerializeField] private float rotateSpeed = 10f; //Ainda não usado
+    internal ParticleSystem.EmissionModule emission;
 
     public TextMeshProUGUI CurrentStateText; //Usado para apresentar a forma de movimentação do player
 
@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         this.FSM.ChangeState(new IdleState(this, "player_idle"));
+
+        emission = GetComponentInChildren<ParticleSystem>().emission;
+        emission.enabled = false;
     }
 
     private void Awake()
@@ -46,8 +49,8 @@ public class PlayerController : MonoBehaviour
 
         controls.PlayerMovement.Aim.performed += ctx => aimInput = ctx.ReadValue<Vector2>(); //Recebendo para onde mirar
 
-        controls.PlayerMovement.Attack.performed += ctx => anim.SetBool("Attack", true); //Enquanto segurar o ataque atacar
-        controls.PlayerMovement.Attack.canceled += ctx => anim.SetBool("Attack", false); //Quando soltar, parar.
+        controls.PlayerMovement.Attack.performed += ctx => emission.enabled = true; //Enquanto segurar o ataque atacar
+        controls.PlayerMovement.Attack.canceled += ctx => emission.enabled = false; //Quando soltar, parar.
 
     }
 
