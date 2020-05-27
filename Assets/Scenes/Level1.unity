@@ -5134,7 +5134,7 @@ MonoBehaviour:
   - {fileID: 1105760897}
   - {fileID: 1478806961}
   - {fileID: 436480648}
-  shouldReturnToFirstPosition: 1
+  shouldReturnToFirstPosition: 0
   movementSpeed: 10
   distanceToPatrol: 5
   aiBehaviour: 1
