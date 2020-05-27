@@ -17,6 +17,7 @@ public class Ai_Medium_Script : MonoBehaviour
     public float distanceToPatrol = 5f;
     public enum Behaviour { patrol, directionalPatrol, alternativeDPatrol, vigilance, agressive};
     public Behaviour aiBehaviour;
+
     void Start()
     {
         emission = GetComponentInChildren<ParticleSystem>().emission;
