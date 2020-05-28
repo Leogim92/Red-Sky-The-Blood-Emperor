@@ -318,8 +318,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56d31356c8e84a6449349312c2b79895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotation: []
-  position: []
+  particle: {fileID: 5052934716148025316}
+  upPosition: {x: 0, y: 0.444, z: 0}
+  upRightPosition: {x: 0.334, y: 0.448, z: 0}
+  upLeftPosition: {x: -0.334, y: 0.448, z: 0}
+  rightPosition: {x: 0.515, y: 0.067, z: 0}
+  leftPosition: {x: -0.515, y: 0.067, z: 0}
+  downPosition: {x: 0, y: -0.444, z: 0}
+  downRightPosition: {x: 0.463, y: -0.152, z: 0}
+  downLeftPosition: {x: -0.463, y: -0.205, z: 0}
 --- !u!1 &5052934715840866441
 GameObject:
   m_ObjectHideFlags: 0

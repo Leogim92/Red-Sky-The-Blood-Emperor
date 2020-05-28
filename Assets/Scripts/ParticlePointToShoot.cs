@@ -4,40 +4,55 @@ using UnityEngine;
 
 public class ParticlePointToShoot : MonoBehaviour
 {
-    public float[] rotation;
-    public Vector3[] position;
+    public GameObject particle;
+    public Vector3 upPosition;
+    public Vector3 upRightPosition;
+    public Vector3 upLeftPosition;
+    public Vector3 rightPosition;
+    public Vector3 leftPosition;
+    public Vector3 downPosition;
+    public Vector3 downRightPosition;
+    public Vector3 downLeftPosition;
 
     public void upShoot()
     {
-        Debug.Log("Up");
+        particle.transform.localPosition = upPosition;
+        particle.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
     public void upRightShoot()
     {
-        Debug.Log("upRight");
+        particle.transform.localPosition = upRightPosition;
+        particle.transform.localRotation = Quaternion.Euler(0, 0, -45f);
     }
     public void upLeftShoot()
     {
-        Debug.Log("upLeft");
+        particle.transform.localPosition = upLeftPosition;
+        particle.transform.localRotation = Quaternion.Euler(0, 0, 45f);
     }
     public void rightShoot()
     {
-        Debug.Log("Right");
+        particle.transform.localPosition = rightPosition;
+        particle.transform.localRotation = Quaternion.Euler(0, 0, -90f);
     }
     public void leftShoot()
     {
-        Debug.Log("left");
+        particle.transform.localPosition = leftPosition;
+        particle.transform.localRotation = Quaternion.Euler(0, 0, 90f);
     }
     public void downShoot()
     {
-        Debug.Log("Down");
+        particle.transform.localPosition = downPosition;
+        particle.transform.localRotation = Quaternion.Euler(0, 0, 180);
     }
     public void downRightShoot()
     {
-        Debug.Log("downRight");
+        particle.transform.localPosition = downRightPosition;
+        particle.transform.localRotation = Quaternion.Euler(0, 0, -135f);
     }
     public void downLeftShoot()
     {
-        Debug.Log("downLeft");
+        particle.transform.localPosition = downLeftPosition;
+        particle.transform.localRotation = Quaternion.Euler(0, 0, 135f);
     }
 
 }
