@@ -16,22 +16,17 @@ public class AlternativeDirectionalPatrolState : IState
     {
         this.ai = ai;
         this.animationName = animationName;
+        AddPositionsToTheList();
     }
 
     public void Enter()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-
-        if (!arePositionsAdded)
-        {
-            AddPositionsToTheList();
-            arePositionsAdded = true;
-        }
     }
 
     private void AddPositionsToTheList()
     {
-        foreach (Transform position in ai.positionsToBe)
+        foreach (Transform position in ai.patrolPositions)
         {
             patrolPositions.Add(position);
         }
@@ -39,7 +34,7 @@ public class AlternativeDirectionalPatrolState : IState
 
     public void Tick()
     {
-        if (Vector2.Distance(player.transform.position, ai.transform.position) < 10f)
+        if (Vector2.Distance(player.transform.position, ai.transform.position) < ai.distanceToAttack)
         {
             ai.FSM.ChangeState(new AttackingState(ai, "Enemy_attack"));
         }

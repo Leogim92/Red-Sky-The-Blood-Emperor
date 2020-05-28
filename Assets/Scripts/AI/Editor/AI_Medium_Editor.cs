@@ -20,14 +20,26 @@ public class AI_Medium_Editor : Editor
 
     private void CheckAIBehaviour()
     {
+        EditorGUILayout.Space();
+        GUILayout.Label("Behaviour Properties", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
         switch (enemy.aiBehaviour)
         {
             case Ai_Medium_Script.Behaviour.patrol:
+                DisplayMovementSpeed();
+                DisplayDistanceToPatrol();
+                DisplayDistanceToAttack();
                 break;
             case Ai_Medium_Script.Behaviour.directionalPatrol:
+                DisplayMovementSpeed();
+                DisplayDistanceToAttack();
+                DisplayPatrolReturnToogle();
                 DisplayPatrolPositions();
                 break;
             case Ai_Medium_Script.Behaviour.alternativeDPatrol:
+                DisplayMovementSpeed();
+                DisplayDistanceToAttack();
+                DisplayPatrolReturnToogle();
                 DisplayPatrolPositions();
                 break;
             case Ai_Medium_Script.Behaviour.agressive:
@@ -43,7 +55,7 @@ public class AI_Medium_Editor : Editor
 
     private void DisplayPatrolPositions()
     {
-        SerializedProperty patrolPositions = serializedObject.FindProperty("positionsToBe");
+        SerializedProperty patrolPositions = serializedObject.FindProperty("patrolPositions");
         patrolPositions.isExpanded = EditorGUILayout.Foldout(patrolPositions.isExpanded, "Patrol Positions");
         if (patrolPositions.isExpanded)
         {
@@ -54,5 +66,21 @@ public class AI_Medium_Editor : Editor
                 EditorGUILayout.PropertyField(transform, new GUIContent("Position " + i));
             }
         }
+    }
+    private void DisplayPatrolReturnToogle()
+    {
+        enemy.shouldReturnToFirstPosition = EditorGUILayout.Toggle("Patrol Return", enemy.shouldReturnToFirstPosition);
+    }
+    private void DisplayMovementSpeed()
+    {
+        enemy.movementSpeed = EditorGUILayout.DelayedFloatField("Movement Speed", enemy.movementSpeed);
+    }
+    private void DisplayDistanceToPatrol()
+    {
+        enemy.distanceToPatrol = EditorGUILayout.DelayedFloatField("Distance To Patrol", enemy.distanceToPatrol);
+    }
+    private void DisplayDistanceToAttack()
+    {
+        enemy.distanceToAttack = EditorGUILayout.DelayedFloatField("Distance To Attack", enemy.distanceToAttack);
     }
 }

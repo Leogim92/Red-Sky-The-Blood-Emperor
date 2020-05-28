@@ -9,15 +9,16 @@ public class Ai_Medium_Script : MonoBehaviour
 {
     internal StateMachine FSM = new StateMachine();
     internal ParticleSystem.EmissionModule emission;
-    [HideInInspector] public List<Transform> positionsToBe;
-    public bool shouldReturnToFirstPosition = false; //Booleano para dizer se o personagem deve retornar ao começo.
-    //Interessante seria colocar outro bool para definir se o personagem retorna ao começo depois de passar pelo ultimo
-    //objeto da lista ou se retorna pelos objetos da lista.
 
-    public float movementSpeed = 5f;
-    public float distanceToPatrol = 5f;
-    public enum Behaviour { patrol, directionalPatrol, alternativeDPatrol, vigilance, agressive};
+    public enum Behaviour { patrol, directionalPatrol, alternativeDPatrol, vigilance, agressive };
     public Behaviour aiBehaviour;
+
+    //custom inspector properties
+    [HideInInspector] public List<Transform> patrolPositions;
+    [HideInInspector] public bool shouldReturnToFirstPosition = false;
+    [HideInInspector] public float movementSpeed = 5f;
+    [HideInInspector] public float distanceToPatrol = 5f;
+    [HideInInspector] public float distanceToAttack = 10f;
 
     void Start()
     {

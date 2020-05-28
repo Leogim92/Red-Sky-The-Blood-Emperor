@@ -24,7 +24,7 @@ public class PatrollingState : IState
 
     public void Tick()
     {
-        if(Vector2.Distance(player.transform.position,ai.transform.position) < 10f)
+        if(Vector2.Distance(player.transform.position,ai.transform.position) < ai.distanceToAttack)
         {
             ai.FSM.ChangeState(new AttackingState(ai, "Enemy_attack"));
         }
