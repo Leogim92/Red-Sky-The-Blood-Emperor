@@ -11,7 +11,7 @@ public class PatrollingState : IState
     private string animationName;
     private GameObject player;
     private float areaToPatrol = 20f;
-
+    
     public PatrollingState(Ai_Medium_Script ai, string animationName)
     {
         this.ai = ai;
@@ -24,14 +24,14 @@ public class PatrollingState : IState
 
     public void Tick()
     {
-        if(Vector2.Distance(player.transform.position,ai.transform.position) < 10f)
+        if(Vector2.Distance(player.transform.position,ai.transform.position) < ai.distanceToAttack)
         {
             ai.FSM.ChangeState(new AttackingState(ai, "Enemy_attack"));
         }
         else
         {
             MoveAI();
-            if (changeDirection)
+            if (changeDirection==true)
             {
                 GetNewDirection();
             }
@@ -43,16 +43,14 @@ public class PatrollingState : IState
         }
 
     }
-
     private void MoveAI()
     {
         ai.transform.position += ai.transform.right * ai.movementSpeed * Time.deltaTime;
     }
-
     private void GetNewDirection()
     {
         patrolRouteStartPos = ai.transform.position;
-        Vector2 lookAt = (ai.initialPosition + UnityEngine.Random.insideUnitCircle * areaToPatrol) - new Vector2(ai.transform.position.x, ai.transform.position.y);
+        Vector2 lookAt = (UnityEngine.Random.insideUnitCircle * areaToPatrol) - new Vector2(ai.transform.position.x, ai.transform.position.y);
         ai.transform.right = lookAt.normalized;
         changeDirection = false;
     }

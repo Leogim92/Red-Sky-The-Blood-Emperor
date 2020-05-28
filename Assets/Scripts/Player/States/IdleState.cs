@@ -10,7 +10,8 @@ public class IdleState : IState {
     }
     public void Enter () {
         player.CurrentStateText.text = "Idle";
-        //player.animator.Play(animationName);
+        player.anim.Play(animationName);
+
     }
 
     public void Tick () {

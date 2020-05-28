@@ -4,29 +4,53 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
+[System.Serializable]
 public class Ai_Medium_Script : MonoBehaviour
 {
     internal StateMachine FSM = new StateMachine();
-    internal Vector2 initialPosition;
     internal ParticleSystem.EmissionModule emission;
 
-    public float movementSpeed = 5f;
-    public float distanceToPatrol = 5f;
+    public enum Behaviour { patrol, directionalPatrol, alternativeDPatrol, vigilance, agressive };
+    public Behaviour aiBehaviour;
+
+    //custom inspector properties
+    [HideInInspector] public List<Transform> patrolPositions;
+    [HideInInspector] public bool shouldReturnToFirstPosition = false;
+    [HideInInspector] public float movementSpeed = 5f;
+    [HideInInspector] public float distanceToPatrol = 5f;
+    [HideInInspector] public float distanceToAttack = 10f;
+
     void Start()
     {
         emission = GetComponentInChildren<ParticleSystem>().emission;
-        GetComponentInChildren<ParticleSystem>().Play();
         emission.enabled = false;
 
-        initialPosition = this.transform.position;
-
-        this.FSM.ChangeState(new PatrollingState(this, "enemy_walk"));
-
+        AIInitialBehaviour();
     }
-
     void Update()
     {
         FSM.Tick();
     }
-
+    private void AIInitialBehaviour()
+    {
+        switch (aiBehaviour)
+        {
+            case Behaviour.patrol:
+                this.FSM.ChangeState(new PatrollingState(this, "enemy_walk"));
+                break;
+            case Behaviour.directionalPatrol:
+                this.FSM.ChangeState(new DirectionalPatrolState(this, "enemy_walk"));
+                break;
+            case Behaviour.alternativeDPatrol:
+                this.FSM.ChangeState(new AlternativeDirectionalPatrolState(this, "enemy_walk"));
+                break;
+            case Behaviour.vigilance:
+                //this.FSM.ChangeState(new VigilanceState(this, "enemy_vigilance"));
+                break;
+            case Behaviour.agressive:
+                //this.FSM.ChangeState(new AgressiveState(this, "enemy_agressive"));
+                break;
+        }
+        
+    }
 }
