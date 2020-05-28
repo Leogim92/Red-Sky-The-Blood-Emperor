@@ -21,14 +21,14 @@ public class DirectionalPatrolState : IState
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        if (ai.positionsToBe.Count == 0)
+        if (ai.patrolPositions.Count == 0)
         {
             Debug.LogError("DirectionalPatrolState: You need to set the positions to be on the public gameobject list");
         }
 
         if (!arePositionsAdded)
         {
-            foreach (Transform p in ai.positionsToBe)
+            foreach (Transform p in ai.patrolPositions)
             {
                 positions.Add(p.position);
             }
@@ -49,7 +49,7 @@ public class DirectionalPatrolState : IState
     public void Tick()
     {
 
-        if (Vector2.Distance(player.transform.position, ai.transform.position) < 10f) //Se estiver próximo ao player não fazer esta patrulha.
+        if (Vector2.Distance(player.transform.position, ai.transform.position) < ai.distanceToAttack) //Se estiver próximo ao player não fazer esta patrulha.
         {
             ai.FSM.ChangeState(new AttackingState(ai, "Enemy_attack"));
         }
