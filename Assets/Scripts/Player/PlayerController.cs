@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         Name = "Carlos";
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        this.FSM.ChangeState(new IdleState(this, "player_idle"));
+        this.FSM.ChangeState(new IdleState(this, "idle_down"));
 
         particle = GetComponentInChildren<ParticleSystem>();
         emission = GetComponentInChildren<ParticleSystem>().emission;
