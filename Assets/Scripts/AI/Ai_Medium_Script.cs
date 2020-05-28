@@ -4,11 +4,12 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
+[System.Serializable]
 public class Ai_Medium_Script : MonoBehaviour
 {
     internal StateMachine FSM = new StateMachine();
     internal ParticleSystem.EmissionModule emission;
-    public List<Transform> positionsToBe; //Por que gameobjects? Porque todos eles tem transform
+    [HideInInspector] public List<Transform> positionsToBe;
     public bool shouldReturnToFirstPosition = false; //Booleano para dizer se o personagem deve retornar ao começo.
     //Interessante seria colocar outro bool para definir se o personagem retorna ao começo depois de passar pelo ultimo
     //objeto da lista ou se retorna pelos objetos da lista.
