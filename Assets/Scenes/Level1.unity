@@ -5900,7 +5900,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Pedro
   Speed: 3
-  rotateSpeed: 10
   CurrentStateText: {fileID: 700681178}
 --- !u!1 &1105760896
 GameObject:
@@ -11584,7 +11583,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 0.0001
       mode: 0
       spread: 0
       speed:

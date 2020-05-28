@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public string Name;
     public float Speed = 3f; //Usado para definir a velocidade do player
     internal ParticleSystem.EmissionModule emission;
+    internal ParticleSystem particle;
 
     public TextMeshProUGUI CurrentStateText; //Usado para apresentar a forma de movimentação do player
 
@@ -24,9 +25,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 aimInput;
 
-    //Tipo de movimentação.
-    //private bool tank;
-    //private bool tankWithAim;
 
     private void Start()
     {
@@ -35,6 +33,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         this.FSM.ChangeState(new IdleState(this, "player_idle"));
 
+        particle = GetComponentInChildren<ParticleSystem>();
         emission = GetComponentInChildren<ParticleSystem>().emission;
         emission.enabled = false;
     }
