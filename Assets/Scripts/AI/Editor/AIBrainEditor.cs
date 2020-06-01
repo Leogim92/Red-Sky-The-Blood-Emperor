@@ -8,7 +8,7 @@ using UnityEditor;
 public class AIBrainEditor : Editor
 {
     AIBrain enemy;
-
+    
     public override void OnInspectorGUI()
     {
         enemy = (AIBrain)target;
@@ -75,5 +75,17 @@ public class AIBrainEditor : Editor
     private void DisplayDistanceToAttack()
     {
         enemy.distanceToAttack = EditorGUILayout.DelayedFloatField("Distance To Attack", enemy.distanceToAttack);
+    }
+
+    private void OnSceneGUI()
+    {
+        enemy = (AIBrain)target;
+        for (int i = 0; i < enemy.patrolPositions.Count-1; i++)
+        {
+            Transform patrolPoint = enemy.patrolPositions[i];
+            patrolPoint.TransformPoint(enemy.patrolPositions[i].position);
+            Handles.color = Color.red;
+            Handles.DrawLine(enemy.patrolPositions[i].position, enemy.patrolPositions[i + 1].position);
+        }
     }
 }
