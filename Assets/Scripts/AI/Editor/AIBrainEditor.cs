@@ -80,12 +80,38 @@ public class AIBrainEditor : Editor
     private void OnSceneGUI()
     {
         enemy = (AIBrain)target;
-        for (int i = 0; i < enemy.patrolPositions.Count-1; i++)
+        Vector3 positionStart, positionFinish;
+        for (int i = 0; i < enemy.patrolPositions.Count - 1; i++)
         {
-            Transform patrolPoint = enemy.patrolPositions[i];
-            patrolPoint.TransformPoint(enemy.patrolPositions[i].position);
-            Handles.color = Color.red;
-            Handles.DrawLine(enemy.patrolPositions[i].position, enemy.patrolPositions[i + 1].position);
+            DrawPatrolPath(out positionStart, out positionFinish, i);
+            CreateTransformHandles(ref positionStart, ref positionFinish, i);
         }
     }
+    private void DrawPatrolPath(out Vector3 positionStart, out Vector3 positionFinish, int i)
+    {
+        positionStart = enemy.patrolPositions[i].position;
+        positionFinish = enemy.patrolPositions[i + 1].position;
+        Handles.color = Color.cyan;
+        Handles.DrawLine(positionStart, positionFinish);
+    }
+    private void CreateTransformHandles(ref Vector3 positionStart, ref Vector3 positionFinish, int i)
+    {
+        EditorGUI.BeginChangeCheck();
+        positionStart = Handles.DoPositionHandle(positionStart, Quaternion.identity);
+        if (EditorGUI.EndChangeCheck())
+        {
+            EditorUtility.SetDirty(enemy);
+            enemy.patrolPositions[i].position = positionStart;
+        }
+
+        EditorGUI.BeginChangeCheck();
+        positionFinish = Handles.DoPositionHandle(positionFinish, Quaternion.identity);
+        if (EditorGUI.EndChangeCheck())
+        {
+            EditorUtility.SetDirty(enemy);
+            enemy.patrolPositions[i + 1].position = positionFinish;
+        }
+    }
+
+    
 }
