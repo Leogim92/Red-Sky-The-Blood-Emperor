@@ -7,12 +7,12 @@ public class PatrollingState : IState
 {
     private Vector2 patrolRouteStartPos;
     private bool changeDirection=true;
-    private Ai_Medium_Script ai;
+    private AIBrain ai;
     private string animationName;
     private GameObject player;
     private float areaToPatrol = 20f;
     
-    public PatrollingState(Ai_Medium_Script ai, string animationName)
+    public PatrollingState(AIBrain ai, string animationName)
     {
         this.ai = ai;
         this.animationName = animationName;

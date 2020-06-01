@@ -5,12 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [System.Serializable]
-public class Ai_Medium_Script : MonoBehaviour
+public class AIBrain : MonoBehaviour
 {
     internal StateMachine FSM = new StateMachine();
     internal ParticleSystem.EmissionModule emission;
 
-    public enum Behaviour { patrol, directionalPatrol, alternativeDPatrol, vigilance, agressive };
+    public enum Behaviour { patrol, directionalPatrol, vigilance, agressive };
     public Behaviour aiBehaviour;
 
     //custom inspector properties
@@ -24,7 +24,6 @@ public class Ai_Medium_Script : MonoBehaviour
     {
         emission = GetComponentInChildren<ParticleSystem>().emission;
         emission.enabled = false;
-
         AIInitialBehaviour();
     }
     void Update()
@@ -40,9 +39,6 @@ public class Ai_Medium_Script : MonoBehaviour
                 break;
             case Behaviour.directionalPatrol:
                 this.FSM.ChangeState(new DirectionalPatrolState(this, "enemy_walk"));
-                break;
-            case Behaviour.alternativeDPatrol:
-                this.FSM.ChangeState(new AlternativeDirectionalPatrolState(this, "enemy_walk"));
                 break;
             case Behaviour.vigilance:
                 //this.FSM.ChangeState(new VigilanceState(this, "enemy_vigilance"));

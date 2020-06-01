@@ -5,10 +5,10 @@ using UnityEngine;
 public class AttackingState : IState
 {
     private GameObject player;
-    private Ai_Medium_Script ai;
+    private AIBrain ai;
     private string animationName;
 
-    public AttackingState(Ai_Medium_Script ai, string animationName)
+    public AttackingState(AIBrain ai, string animationName)
     {
         this.ai = ai;
         this.animationName = animationName;

@@ -4,20 +4,19 @@ using UnityEngine;
 using UnityEditor;
 
 
-[CustomEditor(typeof(Ai_Medium_Script))]
-public class AI_Medium_Editor : Editor
+[CustomEditor(typeof(AIBrain))]
+public class AIBrainEditor : Editor
 {
-    Ai_Medium_Script enemy;
+    AIBrain enemy;
 
     public override void OnInspectorGUI()
     {
-        enemy = (Ai_Medium_Script)target;
+        enemy = (AIBrain)target;
         base.OnInspectorGUI();
 
         CheckAIBehaviour();
         serializedObject.ApplyModifiedProperties();
     }
-
     private void CheckAIBehaviour()
     {
         EditorGUILayout.Space();
@@ -25,27 +24,21 @@ public class AI_Medium_Editor : Editor
         EditorGUILayout.Space();
         switch (enemy.aiBehaviour)
         {
-            case Ai_Medium_Script.Behaviour.patrol:
+            case AIBrain.Behaviour.patrol:
                 DisplayMovementSpeed();
                 DisplayDistanceToPatrol();
                 DisplayDistanceToAttack();
                 break;
-            case Ai_Medium_Script.Behaviour.directionalPatrol:
+            case AIBrain.Behaviour.directionalPatrol:
                 DisplayMovementSpeed();
                 DisplayDistanceToAttack();
                 DisplayPatrolReturnToogle();
                 DisplayPatrolPositions();
                 break;
-            case Ai_Medium_Script.Behaviour.alternativeDPatrol:
-                DisplayMovementSpeed();
-                DisplayDistanceToAttack();
-                DisplayPatrolReturnToogle();
-                DisplayPatrolPositions();
-                break;
-            case Ai_Medium_Script.Behaviour.agressive:
+            case AIBrain.Behaviour.agressive:
                 //agressive properties
                 break;
-            case Ai_Medium_Script.Behaviour.vigilance:
+            case AIBrain.Behaviour.vigilance:
                 //vigilance properties
                 break;
 
