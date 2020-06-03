@@ -48,13 +48,15 @@ public class DirectionalPatrolState : IState
             {
                 currentGoal++;
             }
-            else if (ai.shouldReturnToFirstPosition)
+            else if (ai.patrolLoop)
+            {
+                currentGoal = 0;
+            }
+            else
             {
                 patrolPositions.Reverse();
                 currentGoal = 0;
             }
-            else
-                Debug.Log("End of Patrol"); //go to idle state
         }
 
     }

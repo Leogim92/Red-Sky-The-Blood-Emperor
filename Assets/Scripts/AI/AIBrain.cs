@@ -15,7 +15,7 @@ public class AIBrain : MonoBehaviour
 
     //custom inspector properties
     [HideInInspector] public List<Transform> patrolPositions;
-    [HideInInspector] public bool shouldReturnToFirstPosition = false;
+    [HideInInspector] public bool patrolLoop = false;
     [HideInInspector] public float movementSpeed = 5f;
     [HideInInspector] public float distanceToPatrol = 5f;
     [HideInInspector] public float distanceToAttack = 10f;

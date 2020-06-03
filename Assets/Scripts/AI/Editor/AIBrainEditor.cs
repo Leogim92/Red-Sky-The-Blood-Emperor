@@ -9,6 +9,8 @@ public class AIBrainEditor : Editor
 {
     AIBrain enemy;
     
+
+    //custom inspectorHUI
     public override void OnInspectorGUI()
     {
         enemy = (AIBrain)target;
@@ -32,7 +34,7 @@ public class AIBrainEditor : Editor
             case AIBrain.Behaviour.directionalPatrol:
                 DisplayMovementSpeed();
                 DisplayDistanceToAttack();
-                DisplayPatrolReturnToogle();
+                DisplayLoopToogle();
                 DisplayPatrolPositions();
                 break;
             case AIBrain.Behaviour.agressive:
@@ -41,7 +43,6 @@ public class AIBrainEditor : Editor
             case AIBrain.Behaviour.vigilance:
                 //vigilance properties
                 break;
-
         }
         
     }
@@ -60,9 +61,9 @@ public class AIBrainEditor : Editor
             }
         }
     }
-    private void DisplayPatrolReturnToogle()
+    private void DisplayLoopToogle()
     {
-        enemy.shouldReturnToFirstPosition = EditorGUILayout.Toggle("Patrol Return", enemy.shouldReturnToFirstPosition);
+        enemy.patrolLoop = EditorGUILayout.Toggle("Patrol Loop", enemy.patrolLoop);
     }
     private void DisplayMovementSpeed()
     {
@@ -77,6 +78,8 @@ public class AIBrainEditor : Editor
         enemy.distanceToAttack = EditorGUILayout.DelayedFloatField("Distance To Attack", enemy.distanceToAttack);
     }
 
+
+    //custom sceneGUI
     private void OnSceneGUI()
     {
         enemy = (AIBrain)target;
@@ -86,6 +89,7 @@ public class AIBrainEditor : Editor
             DrawPatrolPath(out positionStart, out positionFinish, i);
             CreateTransformHandles(ref positionStart, ref positionFinish, i);
         }
+        DrawLoop();
     }
     private void DrawPatrolPath(out Vector3 positionStart, out Vector3 positionFinish, int i)
     {
@@ -112,6 +116,13 @@ public class AIBrainEditor : Editor
             enemy.patrolPositions[i + 1].position = positionFinish;
         }
     }
+    private void DrawLoop()
+    {
+        if (enemy.patrolLoop)
+        {
+            Handles.color = Color.cyan;
+            Handles.DrawLine(enemy.patrolPositions[0].position, enemy.patrolPositions[enemy.patrolPositions.Count - 1].position);
+        }
+    }
 
-    
 }
