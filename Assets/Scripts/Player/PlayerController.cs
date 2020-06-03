@@ -61,7 +61,6 @@ public class PlayerController : MonoBehaviour
     {
         xInput = moveInput.x;
         yInput = moveInput.y;
-        //Debug.Log(moveInput);
 
         FSM.Tick();
     }

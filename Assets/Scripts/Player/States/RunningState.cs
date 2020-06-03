@@ -24,7 +24,6 @@ public class RunningState : IState {
             player.rb.velocity = Vector2.zero;
 
             //Alô alô, algo estranho acontece aqui.
-            Debug.Log(lastInput);
             player.anim.SetFloat("xInput", lastInput.x);
             player.anim.SetFloat("yInput", lastInput.y);
 

@@ -17,6 +17,7 @@ public class DirectionalPatrolState : IState
         this.animationName = animationName;
         AddPositionsToTheList();
     }
+    
 
     public void Enter()
     {
@@ -44,18 +45,21 @@ public class DirectionalPatrolState : IState
                 LookAtPatrolPosition(patrolPositions[currentGoal].position);
                 ai.transform.position = Vector2.MoveTowards(ai.transform.position, patrolPositions[currentGoal].position, ai.movementSpeed * Time.deltaTime);
             }
-            else if (currentGoal < patrolPositions.Count - 1)
+            else if (currentGoal < patrolPositions.Count-1)
             {
                 currentGoal++;
+                ai.FSM.ChangeState(new IdleAIState(ai, "Enemy_idle", this));
             }
             else if (ai.patrolLoop)
             {
                 currentGoal = 0;
+                ai.FSM.ChangeState(new IdleAIState(ai, "Enemy_idle", this));
             }
             else
             {
                 patrolPositions.Reverse();
                 currentGoal = 0;
+                ai.FSM.ChangeState(new IdleAIState(ai, "Enemy_idle", this));
             }
         }
 

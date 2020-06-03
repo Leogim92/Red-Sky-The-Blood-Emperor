@@ -34,6 +34,7 @@ public class AIBrainEditor : Editor
             case AIBrain.Behaviour.directionalPatrol:
                 DisplayMovementSpeed();
                 DisplayDistanceToAttack();
+                DisplayIdleTime();
                 DisplayLoopToogle();
                 DisplayPatrolPositions();
                 break;
@@ -64,6 +65,10 @@ public class AIBrainEditor : Editor
     private void DisplayLoopToogle()
     {
         enemy.patrolLoop = EditorGUILayout.Toggle("Patrol Loop", enemy.patrolLoop);
+    }
+    private void DisplayIdleTime()
+    {
+        enemy.timeToWait = EditorGUILayout.DelayedFloatField("Idle Waiting Time", enemy.timeToWait);
     }
     private void DisplayMovementSpeed()
     {
