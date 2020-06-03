@@ -5031,7 +5031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f377968085a1a40bcc2c7255ab7a59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiBehaviour: 2
+  aiBehaviour: 0
   patrolPositions:
   - {fileID: 1105760897}
   - {fileID: 1478806961}
@@ -10529,6 +10529,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1923528960800901783, guid: f3d98433a287c3e43984ce81bdd4967f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1923528960800901783, guid: f3d98433a287c3e43984ce81bdd4967f,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1923528960800901783, guid: f3d98433a287c3e43984ce81bdd4967f,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5052934715232148019, guid: f3d98433a287c3e43984ce81bdd4967f,
         type: 3}
       propertyPath: m_Camera
@@ -10592,6 +10607,41 @@ PrefabInstance:
     - target: {fileID: 5052934715839985577, guid: f3d98433a287c3e43984ce81bdd4967f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5052934715840866442, guid: f3d98433a287c3e43984ce81bdd4967f,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5052934715840866442, guid: f3d98433a287c3e43984ce81bdd4967f,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5052934715840866442, guid: f3d98433a287c3e43984ce81bdd4967f,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5052934715840866442, guid: f3d98433a287c3e43984ce81bdd4967f,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7408362860450593344, guid: f3d98433a287c3e43984ce81bdd4967f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7408362860450593344, guid: f3d98433a287c3e43984ce81bdd4967f,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7408362860450593344, guid: f3d98433a287c3e43984ce81bdd4967f,
+        type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

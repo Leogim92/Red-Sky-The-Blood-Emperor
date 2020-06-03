@@ -9,8 +9,6 @@ public class PlayerController : MonoBehaviour
 {
     public string Name;
     public float Speed = 3f; //Usado para definir a velocidade do player
-    internal ParticleSystem.EmissionModule emission;
-    //internal ParticleSystem particle;
 
     public TextMeshProUGUI CurrentStateText; //Usado para apresentar a forma de movimentação do player
 
@@ -18,6 +16,8 @@ public class PlayerController : MonoBehaviour
     internal StateMachine FSM = new StateMachine(); //Fazendo o FSM
     internal Animator anim; //Controlando o Animator
     internal Rigidbody2D rb;
+    internal ParticleSystem.EmissionModule emission;
+    internal HPCount hp;
 
     private Vector2 moveInput;
     internal float xInput { get; set; } //Isto é definido em Update como uma parte do vetor recebido do input
@@ -33,9 +33,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         this.FSM.ChangeState(new IdleState(this, "idle_down"));
 
-        //particle = GetComponentInChildren<ParticleSystem>();
         emission = GetComponentInChildren<ParticleSystem>().emission;
         emission.enabled = false;
+
+        hp = GetComponent<HPCount>();
     }
 
     private void Awake()
@@ -73,9 +74,23 @@ public class PlayerController : MonoBehaviour
         return anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1;
     }
 
+    public void DamageTaken()
+    {
+        //Debug.Log("Tomei dano");
+    }
+
+    public void Death()
+    {
+
+    }
+
     private void OnParticleCollision(GameObject other)
     {
         Debug.Log("Colidi com " + other.name);
+        if(other.name == "PistolParticle")
+        {
+            hp.Damaged(1);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
