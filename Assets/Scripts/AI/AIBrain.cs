@@ -19,7 +19,6 @@ public class AIBrain : MonoBehaviour
     [HideInInspector] public float movementSpeed = 5f;
     [HideInInspector] public float distanceToPatrol = 5f;
     [HideInInspector] public float distanceToAttack = 10f;
-    [HideInInspector] public float pathSegmentDistance=2.5f;
 
     void Start()
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System;
+
 
 [CustomEditor(typeof(AIBrain))]
 public class AIBrainEditor : Editor
@@ -33,9 +33,7 @@ public class AIBrainEditor : Editor
                 DisplayMovementSpeed();
                 DisplayDistanceToAttack();
                 DisplayPatrolReturnToogle();
-                DisplayPathSegmentDistance();
                 DisplayPatrolPositions();
-                
                 break;
             case AIBrain.Behaviour.agressive:
                 //agressive properties
@@ -46,11 +44,6 @@ public class AIBrainEditor : Editor
 
         }
         
-    }
-
-    private void DisplayPathSegmentDistance()
-    {
-        enemy.pathSegmentDistance = EditorGUILayout.DelayedFloatField("Path Segment Distance", enemy.pathSegmentDistance);
     }
 
     private void DisplayPatrolPositions()
@@ -108,22 +101,6 @@ public class AIBrainEditor : Editor
         if (EditorGUI.EndChangeCheck())
         {
             EditorUtility.SetDirty(enemy);
-            if (i > 0)
-            {
-                if (enemy.patrolPositions[i - 1].position.x < positionStart.x + 1 && enemy.patrolPositions[i - 1].position.x > positionStart.x -1)
-                {
-                    positionStart.x = enemy.patrolPositions[i - 1].position.x;
-                }
-                else if (enemy.patrolPositions[i - 1].position.x > positionStart.x) positionStart.x = enemy.patrolPositions[i - 1].position.x - enemy.pathSegmentDistance;
-                else if (enemy.patrolPositions[i - 1].position.x < positionStart.x) positionStart.x = enemy.patrolPositions[i - 1].position.x + enemy.pathSegmentDistance;
-
-                if (enemy.patrolPositions[i - 1].position.y < positionStart.y + 1 && enemy.patrolPositions[i - 1].position.y > positionStart.y - 1)
-                {
-                    positionStart.y = enemy.patrolPositions[i - 1].position.y;
-                }
-                else if (enemy.patrolPositions[i - 1].position.y > positionStart.y) positionStart.y = enemy.patrolPositions[i - 1].position.y - enemy.pathSegmentDistance;
-                else if (enemy.patrolPositions[i - 1].position.y < positionStart.y) positionStart.y = enemy.patrolPositions[i - 1].position.y + enemy.pathSegmentDistance;
-            }
             enemy.patrolPositions[i].position = positionStart;
         }
 
@@ -132,20 +109,6 @@ public class AIBrainEditor : Editor
         if (EditorGUI.EndChangeCheck())
         {
             EditorUtility.SetDirty(enemy);
-            if (enemy.patrolPositions[i].position.x < positionFinish.x + 1 && enemy.patrolPositions[i].position.x > positionFinish.x - 1)
-            {
-                positionFinish.x = enemy.patrolPositions[i].position.x;
-            }
-            else if (enemy.patrolPositions[i].position.x > positionFinish.x) positionFinish.x = enemy.patrolPositions[i].position.x - enemy.pathSegmentDistance;
-            else if (enemy.patrolPositions[i].position.x < positionFinish.x) positionFinish.x = enemy.patrolPositions[i].position.x + enemy.pathSegmentDistance;
-
-            if (enemy.patrolPositions[i].position.y < positionFinish.y + 1 && enemy.patrolPositions[i].position.y > positionFinish.y - 1)
-            {
-                positionFinish.y = enemy.patrolPositions[i].position.y;
-            }
-            else if (enemy.patrolPositions[i].position.y > positionFinish.y) positionFinish.y = enemy.patrolPositions[i].position.y - enemy.pathSegmentDistance;
-            else if (enemy.patrolPositions[i].position.y < positionFinish.y) positionFinish.y = enemy.patrolPositions[i].position.y + enemy.pathSegmentDistance;
-
             enemy.patrolPositions[i + 1].position = positionFinish;
         }
     }
