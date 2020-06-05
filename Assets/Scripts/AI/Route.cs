@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Route", menuName = "New Patrol Route")]
 [System.Serializable]
-public class Routes : ScriptableObject
+public class Route : ScriptableObject
 {
     public List<Vector3> PatrolRoute;
 }

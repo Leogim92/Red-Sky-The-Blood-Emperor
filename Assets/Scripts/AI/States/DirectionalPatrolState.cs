@@ -27,7 +27,7 @@ public class DirectionalPatrolState : IState
     private void UpdatePositions()
     {
         patrolPositions.Clear();
-        foreach (Vector3 position in ai.patrolRoutes.PatrolRoute)
+        foreach (Vector3 position in ai.patrolRoutes.SelectedRoute.PatrolRoute)
         {
             patrolPositions.Add(position);
         }

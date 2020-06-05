@@ -1,22 +1,35 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System;
 
 [CustomEditor(typeof(PatrolRoutes))]
 public class PatrolRoutesEditor : Editor
 {
     PatrolRoutes patrolRoute;
-    int selected;
     string[] options =null;
     public override void OnInspectorGUI()
     {
-        //base.OnInspectorGUI();
         patrolRoute = (PatrolRoutes)target;
         CreateOptions();
-        EditorGUILayout.Popup("Select Route", selected, options);
-        patrolRoute.SelectedRoute = patrolRoute.Routes[selected];
-        EditorUtility.SetDirty(target);
-        serializedObject.ApplyModifiedProperties();
+        SelectRoute();
+        EditorGUILayout.Space();
+        DisplaySelectedRoute();
+        EditorGUILayout.Space();
+        base.OnInspectorGUI();
+        serializedObject.Update();
     }
+
+    private void DisplaySelectedRoute()
+    {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("SelectedRoute"));
+    }
+
+    private void SelectRoute()
+    {
+        patrolRoute.SelectedOption = EditorGUILayout.Popup("Choose a Patrol Route", patrolRoute.SelectedOption, options);
+        patrolRoute.SelectedRoute = patrolRoute.Routes[patrolRoute.SelectedOption];
+    }
+
     void CreateOptions()
     {
         options = new string[patrolRoute.Routes.Count];

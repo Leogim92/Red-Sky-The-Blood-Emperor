@@ -36,7 +36,8 @@ public class AIBrainEditor : Editor
                 DisplayDistanceToAttack();
                 DisplayIdleTime();
                 DisplayLoopToogle();
-                DisplayPatrolPositions();
+                EditorGUILayout.Space();
+                DisplayPatrolRoute();
                 break;
             case AIBrain.Behaviour.agressive:
                 //agressive properties
@@ -47,7 +48,7 @@ public class AIBrainEditor : Editor
         }
         
     }
-    private void DisplayPatrolPositions()
+    private void DisplayPatrolRoute()
     {
         SerializedProperty patrolRoutesProperty = serializedObject.FindProperty("patrolRoutes");
         EditorGUILayout.PropertyField(patrolRoutesProperty);
@@ -82,7 +83,7 @@ public class AIBrainEditor : Editor
             if (enemy.aiBehaviour == AIBrain.Behaviour.directionalPatrol)
             {
                 enemy = (AIBrain)target;
-                patrolPositions = enemy.patrolRoutes.PatrolRoute;
+                patrolPositions = enemy.patrolRoutes.SelectedRoute.PatrolRoute;
                 Vector3 positionStart, positionFinish;
                 for (int i = 0; i < patrolPositions.Count - 1; i++)
                 {

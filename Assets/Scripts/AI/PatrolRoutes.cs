@@ -7,6 +7,7 @@ using UnityEngine;
 public class PatrolRoutes : ScriptableObject
 {
     [HideInInspector] public List<Vector3> PatrolRoute;
-    [HideInInspector]public List<Routes> Routes;
-    public Routes SelectedRoute;
+    [HideInInspector] public int SelectedOption;
+    public List<Route> Routes;
+    [HideInInspector] public Route SelectedRoute;
 }
