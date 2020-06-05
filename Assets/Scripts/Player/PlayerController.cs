@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     internal StateMachine FSM = new StateMachine(); //Fazendo o FSM
     internal Animator anim; //Controlando o Animator
     internal Rigidbody2D rb;
-    internal ParticleSystem.EmissionModule emission;
+    internal ParticleSystem particle;
     internal HPCount hp;
 
     private Vector2 moveInput;
@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         this.FSM.ChangeState(new IdleState(this, "idle_down"));
 
-        emission = GetComponentInChildren<ParticleSystem>().emission;
-        emission.enabled = false;
+        particle = GetComponentInChildren<ParticleSystem>();
+        particle.Stop();
 
         hp = GetComponent<HPCount>();
     }
@@ -49,8 +49,8 @@ public class PlayerController : MonoBehaviour
 
         controls.PlayerMovement.Aim.performed += ctx => aimInput = ctx.ReadValue<Vector2>(); //Recebendo para onde mirar
 
-        controls.PlayerMovement.Attack.performed += ctx => emission.enabled = true; //Enquanto segurar o ataque atacar
-        controls.PlayerMovement.Attack.canceled += ctx => emission.enabled = false; //Quando soltar, parar.
+        controls.PlayerMovement.Attack.performed += ctx => particle.Play(); //Enquanto segurar o ataque atacar
+        controls.PlayerMovement.Attack.canceled += ctx => particle.Stop(); //Quando soltar, parar.
 
     }
 
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        Debug.Log("Colidi com " + other.name);
+        //Debug.Log("Colidi com " + other.name);
         if(other.name == "PistolParticle")
         {
             hp.Damaged(1);
