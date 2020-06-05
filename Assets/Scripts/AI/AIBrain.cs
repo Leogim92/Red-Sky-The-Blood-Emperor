@@ -13,8 +13,9 @@ public class AIBrain : MonoBehaviour
     public enum Behaviour { patrol, directionalPatrol, vigilance, agressive };
     public Behaviour aiBehaviour;
 
+
     //custom inspector properties
-    [HideInInspector] public List<Transform> patrolPositions;
+    [HideInInspector] public PatrolRoutes patrolRoutes;
     [HideInInspector] public bool patrolLoop = false;
     [HideInInspector] public float movementSpeed = 5f;
     [HideInInspector] public float distanceToPatrol = 5f;

@@ -8,14 +8,14 @@ public class DirectionalPatrolState : IState
     private string animationName;
     private GameObject player;
 
-    private List<Transform> patrolPositions = new List<Transform>();
+    private List<Vector3> patrolPositions = new List<Vector3>();
     private int currentGoal=0;
 
     public DirectionalPatrolState(AIBrain ai, string animationName)
     {
         this.ai = ai;
         this.animationName = animationName;
-        AddPositionsToTheList();
+        UpdatePositions();
     }
     
 
@@ -24,9 +24,10 @@ public class DirectionalPatrolState : IState
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void AddPositionsToTheList()
+    private void UpdatePositions()
     {
-        foreach (Transform position in ai.patrolPositions)
+        patrolPositions.Clear();
+        foreach (Vector3 position in ai.patrolRoutes.PatrolRoute)
         {
             patrolPositions.Add(position);
         }
@@ -34,16 +35,17 @@ public class DirectionalPatrolState : IState
 
     public void Tick()
     {
+        UpdatePositions();
         if (Vector2.Distance(player.transform.position, ai.transform.position) < ai.distanceToAttack)
         {
             ai.FSM.ChangeState(new AttackingState(ai, "Enemy_attack"));
         }
         else 
         {
-            if (Vector2.Distance(ai.transform.position, patrolPositions[currentGoal].position) > 0.6f)
+            if (Vector2.Distance(ai.transform.position, patrolPositions[currentGoal]) > 0.6f)
             {
-                LookAtPatrolPosition(patrolPositions[currentGoal].position);
-                ai.transform.position = Vector2.MoveTowards(ai.transform.position, patrolPositions[currentGoal].position, ai.movementSpeed * Time.deltaTime);
+                LookAtPatrolPosition(patrolPositions[currentGoal]);
+                ai.transform.position = Vector2.MoveTowards(ai.transform.position, patrolPositions[currentGoal], ai.movementSpeed * Time.deltaTime);
             }
             else if (currentGoal < patrolPositions.Count-1)
             {

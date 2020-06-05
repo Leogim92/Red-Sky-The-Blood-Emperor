@@ -8,8 +8,8 @@ using UnityEditor;
 public class AIBrainEditor : Editor
 {
     AIBrain enemy;
+    List<Vector3> patrolPositions;
     
-
     //custom inspectorHUI
     public override void OnInspectorGUI()
     {
@@ -47,20 +47,10 @@ public class AIBrainEditor : Editor
         }
         
     }
-
     private void DisplayPatrolPositions()
     {
-        SerializedProperty patrolPositions = serializedObject.FindProperty("patrolPositions");
-        patrolPositions.isExpanded = EditorGUILayout.Foldout(patrolPositions.isExpanded, "Patrol Positions");
-        if (patrolPositions.isExpanded)
-        {
-            patrolPositions.arraySize = EditorGUILayout.DelayedIntField("Size", patrolPositions.arraySize);
-            for (int i = 0; i < patrolPositions.arraySize; ++i)
-            {
-                SerializedProperty transform = patrolPositions.GetArrayElementAtIndex(i);
-                EditorGUILayout.PropertyField(transform, new GUIContent("Position " + i));
-            }
-        }
+        SerializedProperty patrolRoutesProperty = serializedObject.FindProperty("patrolRoutes");
+        EditorGUILayout.PropertyField(patrolRoutesProperty);
     }
     private void DisplayLoopToogle()
     {
@@ -87,19 +77,27 @@ public class AIBrainEditor : Editor
     //custom sceneGUI
     private void OnSceneGUI()
     {
-        enemy = (AIBrain)target;
-        Vector3 positionStart, positionFinish;
-        for (int i = 0; i < enemy.patrolPositions.Count - 1; i++)
+        try
         {
-            DrawPatrolPath(out positionStart, out positionFinish, i);
-            CreateTransformHandles(ref positionStart, ref positionFinish, i);
+            if (enemy.aiBehaviour == AIBrain.Behaviour.directionalPatrol)
+            {
+                enemy = (AIBrain)target;
+                patrolPositions = enemy.patrolRoutes.PatrolRoute;
+                Vector3 positionStart, positionFinish;
+                for (int i = 0; i < patrolPositions.Count - 1; i++)
+                {
+                    DrawPatrolPath(out positionStart, out positionFinish, i);
+                    CreateTransformHandles(ref positionStart, ref positionFinish, i);
+                }
+                DrawLoop();
+            }
         }
-        DrawLoop();
+        catch { }
     }
     private void DrawPatrolPath(out Vector3 positionStart, out Vector3 positionFinish, int i)
     {
-        positionStart = enemy.patrolPositions[i].position;
-        positionFinish = enemy.patrolPositions[i + 1].position;
+        positionStart = patrolPositions[i];
+        positionFinish = patrolPositions[i + 1];
         Handles.color = Color.cyan;
         Handles.DrawLine(positionStart, positionFinish);
     }
@@ -110,7 +108,7 @@ public class AIBrainEditor : Editor
         if (EditorGUI.EndChangeCheck())
         {
             EditorUtility.SetDirty(enemy);
-            enemy.patrolPositions[i].position = positionStart;
+            patrolPositions[i] = positionStart;
         }
 
         EditorGUI.BeginChangeCheck();
@@ -118,7 +116,7 @@ public class AIBrainEditor : Editor
         if (EditorGUI.EndChangeCheck())
         {
             EditorUtility.SetDirty(enemy);
-            enemy.patrolPositions[i + 1].position = positionFinish;
+            patrolPositions[i + 1] = positionFinish;
         }
     }
     private void DrawLoop()
@@ -126,7 +124,7 @@ public class AIBrainEditor : Editor
         if (enemy.patrolLoop)
         {
             Handles.color = Color.cyan;
-            Handles.DrawLine(enemy.patrolPositions[0].position, enemy.patrolPositions[enemy.patrolPositions.Count - 1].position);
+            Handles.DrawLine(patrolPositions[0], patrolPositions[patrolPositions.Count - 1]);
         }
     }
 
