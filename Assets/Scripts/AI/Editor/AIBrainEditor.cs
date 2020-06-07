@@ -83,7 +83,7 @@ public class AIBrainEditor : Editor
             if (enemy.aiBehaviour == AIBrain.Behaviour.directionalPatrol)
             {
                 enemy = (AIBrain)target;
-                patrolPositions = enemy.patrolRoutes.SelectedRoute.PatrolRoute;
+                patrolPositions = enemy.patrolRoutes.SelectedRoute.PatrolPositions;
                 Vector3 positionStart, positionFinish;
                 for (int i = 0; i < patrolPositions.Count - 1; i++)
                 {

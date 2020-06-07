@@ -6,5 +6,5 @@ using UnityEngine;
 [System.Serializable]
 public class Route : ScriptableObject
 {
-    public List<Vector3> PatrolRoute;
+    public List<Vector3> PatrolPositions;
 }

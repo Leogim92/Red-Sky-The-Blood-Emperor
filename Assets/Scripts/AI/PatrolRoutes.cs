@@ -6,8 +6,9 @@ using UnityEngine;
 [System.Serializable]
 public class PatrolRoutes : ScriptableObject
 {
-    [HideInInspector] public List<Vector3> PatrolRoute;
+    [HideInInspector] public Vector3 PatrolRoute;
     [HideInInspector] public int SelectedOption;
     public List<Route> Routes;
     [HideInInspector] public Route SelectedRoute;
+
 }

@@ -11,17 +11,48 @@ public class PatrolRoutesEditor : Editor
     {
         patrolRoute = (PatrolRoutes)target;
         CreateOptions();
-        SelectRoute();
         EditorGUILayout.Space();
+        SelectRoute();
         DisplaySelectedRoute();
         EditorGUILayout.Space();
         base.OnInspectorGUI();
-        serializedObject.Update();
     }
 
     private void DisplaySelectedRoute()
     {
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("SelectedRoute"));
+        SetRouteSize();
+        DisplayRoutePositions();
+    }
+
+    private void SetRouteSize()
+    {
+        int size = EditorGUILayout.DelayedIntField("Size", patrolRoute.SelectedRoute.PatrolPositions.Count);
+        int difference = size - patrolRoute.SelectedRoute.PatrolPositions.Count;
+        if (size > patrolRoute.SelectedRoute.PatrolPositions.Count)
+        {
+            Vector3 newPos = patrolRoute.SelectedRoute.PatrolPositions[patrolRoute.SelectedRoute.PatrolPositions.Count - 1];
+            for (int i = 0; i< difference; i++)
+            {
+                patrolRoute.SelectedRoute.PatrolPositions.Add(newPos);
+            }
+        }
+        else if (size < patrolRoute.SelectedRoute.PatrolPositions.Count)
+        {
+            int listElements = patrolRoute.SelectedRoute.PatrolPositions.Count - 1;
+            int goalElements = patrolRoute.SelectedRoute.PatrolPositions.Count + difference;
+            for (int i = listElements; i >= goalElements; i--)
+            {
+                patrolRoute.SelectedRoute.PatrolPositions.RemoveAt(i);
+            }
+        }
+    }
+
+    private void DisplayRoutePositions()
+    {
+        for (int i = 0; i < patrolRoute.SelectedRoute.PatrolPositions.Count; i++)
+        {
+            patrolRoute.SelectedRoute.PatrolPositions[i] = EditorGUILayout.Vector3Field("Position: " + i, patrolRoute.SelectedRoute.PatrolPositions[i]);
+        }
     }
 
     private void SelectRoute()

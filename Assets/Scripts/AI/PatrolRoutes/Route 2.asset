@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1175403baabe046b1a02154c15d663, type: 3}
   m_Name: Route 2
   m_EditorClassIdentifier: 
-  PatrolRoute:
-  - {x: 24.043095, y: -8.500082, z: 0}
-  - {x: 12.446554, y: 0.30357248, z: 0}
-  - {x: 15.846587, y: 6.435778, z: 0}
-  - {x: 29.082432, y: -0.8500087, z: 0}
-  - {x: 21.614502, y: 10.017957, z: 0}
-  - {x: 32.36104, y: 8.742943, z: 0}
+  PatrolPositions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}

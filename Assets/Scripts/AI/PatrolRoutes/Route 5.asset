@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1175403baabe046b1a02154c15d663, type: 3}
   m_Name: Route 5
   m_EditorClassIdentifier: 
-  PatrolRoute:
-  - {x: 19.368052, y: 4.4929013, z: 0}
-  - {x: 29.26458, y: -1.214298, z: 0}
-  - {x: 28.839573, y: 7.9536533, z: 0}
+  PatrolPositions:
+  - {x: 23.382755, y: -2.478736, z: 0}
+  - {x: 30.818968, y: 1.9003639, z: 0}
+  - {x: 27.927107, y: 12.641559, z: 0}
