@@ -18,6 +18,7 @@ public class IdleState : IState {
         if (player.xInput != 0 || player.yInput != 0) {
             player.FSM.ChangeState (new RunningState (player, "player_run"));
         }
+        
     }
 
     public void Exit() { }
