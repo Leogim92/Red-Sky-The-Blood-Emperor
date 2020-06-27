@@ -2,16 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//Ok tentei de tudo com o animator, de blend a sub-state machine. Vai ser do jeito feio. HARDCODED
-//Talvez fazer a troca de string to hash seja uma forma melhor de comparar essas strings
-//Atenção! A deadzone para joystick foi aumentada para evitar pequenos erros no direcional.
-//Nas direções temos duas formas de receber a direção da animação. Tanto faz uma ou outra neste momento.
 
 public class RunningState : IState {
 
     private PlayerController player;
     private string animationName;
-    private string nextAnimation = "idle_down"; //Caso de bug
+    private Vector2 lastInput;
 
     public RunningState (PlayerController player, string animationName) {
         this.player = player;
@@ -19,71 +15,41 @@ public class RunningState : IState {
     }
     public void Enter () {
         player.CurrentStateText.text = "Running";
+        player.anim.Play(animationName);
+        //player.anim.SetBool("Run", true);
     }
 
     public void Tick () {
         if (player.xInput == 0 && player.yInput == 0) {
             player.rb.velocity = Vector2.zero;
 
-            player.FSM.ChangeState(new IdleState(player, nextAnimation));
+            //Alô alô, algo estranho acontece aqui.
+            player.anim.SetFloat("xInput", lastInput.x);
+            player.anim.SetFloat("yInput", lastInput.y);
+
+            player.FSM.ChangeState (new IdleState (player, "player_idle"));
         }
 
-        //Direcionais, esquerda, direita....
-        else if(player.xInput < 0 && Mathf.Round(player.yInput) == 0)
-        //else if (player.rb.velocity.x < 0 && Mathf.Round(player.rb.velocity.y) == 0)
-        {
-            player.anim.Play("walk_left");
-            nextAnimation = "idle_left";
+        //Old
+        //player.rb.velocity = new Vector2 (player.xInput * player.Speed, player.yInput * player.Speed);
 
-        }
-        else if(player.xInput > 0 && Mathf.Round(player.yInput) == 0)
-        //else if (player.rb.velocity.x > 0 && Mathf.Round(player.rb.velocity.y) == 0)
-        {
-            player.anim.Play("walk_right");
-            nextAnimation = "idle_right";
-        }
-        else if(Mathf.Round(player.xInput) == 0 && player.yInput > 0)
-        //else if (Mathf.Round(player.rb.velocity.x) == 0 && player.rb.velocity.y > 0)
-        {
-            player.anim.Play("walk_up");
-            nextAnimation = "idle_up";
-        }
-        else if(Mathf.Round(player.xInput) == 0 && player.yInput < 0)
-        //else if (Mathf.Round(player.rb.velocity.x) == 0 && player.rb.velocity.y < 0)
-        {
-            player.anim.Play("walk_down");
-            nextAnimation = "idle_down";
-        }
-        //Misturados
-        //Para cima
-        else if(player.xInput > 0 && player.yInput > 0)
-        //else if (player.rb.velocity.x > 0 && player.rb.velocity.y > 0)
-        {
-            player.anim.Play("walk_up_right");
-            nextAnimation = "idle_up_right";
-        }
-        else if(player.xInput < 0 && player.yInput > 0)
-        //else if (player.rb.velocity.x < 0 && player.rb.velocity.y > 0)
-        {
-            player.anim.Play("walk_up_left");
-            nextAnimation = "idle_up_left";
-        }
-        //Para baixo
-        else if(player.xInput > 0 && player.yInput < 0)
-        //else if (player.rb.velocity.x > 0 && player.rb.velocity.y < 0)
-        {
-            player.anim.Play("walk_down_right");
-            nextAnimation = "idle_down_right";
-        }
-        else if(player.xInput < 0 && player.yInput < 0)
-        //else if (player.rb.velocity.x < 0 && player.rb.velocity.y < 0)
-        {
-            player.anim.Play("walk_down_left");
-            nextAnimation = "idle_down_left";
-        }
+        //Movimento Norte/Sul
+        player.rb.velocity = Vector3.up * player.Speed * player.yInput + Vector3.right * player.Speed * player.xInput;
 
+        //NÂO FUNCIONAL
+        //player.particle.gameObject.transform.rotation = Quaternion.LookRotation(player.rb.velocity); //Tentando rotacionar a partícula
 
-        player.rb.velocity = new Vector2 (player.xInput * player.Speed, player.yInput * player.Speed);
+        //Aqui podemos adicionar o controle da animação
+        player.anim.SetFloat("xInput", player.xInput);
+        player.anim.SetFloat("yInput", player.yInput);
+
+        //Salvando ultimo input não zero.
+        if(player.xInput != 0 || player.yInput != 0)
+        {
+            lastInput.x = player.xInput;
+            lastInput.y = player.yInput;
+            //Debug.Log(lastInput);
+        }
 
     }
 
